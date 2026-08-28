@@ -51,7 +51,7 @@ footbank/
 
 | # | Título | Conceito | Severidade |
 |---|---|---|---|
-| [002](docs/incidents/002-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
+| [002](docs/incidents/001-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
 
 ---
 
