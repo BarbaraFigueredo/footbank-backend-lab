@@ -51,7 +51,6 @@ footbank/
 
 | # | Título | Conceito | Severidade |
 |---|---|---|---|
-| [001](docs/incidents/001-payment-duplication.md) | Duplicidade de Pagamentos | Idempotência | SEV-1 |
 | [002](docs/incidents/002-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
 
 ---
