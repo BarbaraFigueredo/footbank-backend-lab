@@ -1,4 +1,4 @@
-package com.footbank.desafio02circuitbreaker;
+package com.footbank.payment;
 
 import java.math.BigDecimal;
 import java.time.Instant;

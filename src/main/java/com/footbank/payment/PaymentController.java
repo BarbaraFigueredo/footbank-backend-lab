@@ -1,4 +1,4 @@
-package com.footbank.desafio02circuitbreaker;
+package com.footbank.payment;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,15 +16,15 @@ public class PaymentController {
         this.gatewayService = gatewayService;
     }
 
-    // PROBLEMA: nenhum tratamento de erro ou fallback aqui.
-    // Se o gateway falhar, o usuário recebe um erro 500 genérico
-    // e o serviço continua tentando chamar um gateway que está morto.
-    //
-    // TODO: Como o controller deve reagir quando o Circuit Breaker estiver aberto?
-    //       Que HTTP status e mensagem fazem sentido para o cliente de uma fintech?
     @PostMapping
     public ResponseEntity<PaymentConfirmation> pay(@RequestBody PaymentRequest request) {
         PaymentConfirmation confirmation = gatewayService.processPayment(request);
+
+        // 202 Accepted quando o pagamento está pendente por indisponibilidade do gateway
+        if ("PENDING".equals(confirmation.status())) {
+            return ResponseEntity.accepted().body(confirmation);
+        }
+
         return ResponseEntity.ok(confirmation);
     }
 }
