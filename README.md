@@ -1,40 +1,69 @@
-# FootBank - Laboratório de Engenharia e System Design
+# FootBank — Backend Lab
 
-Bem-vindo ao **FootBank**, um laboratório prático de engenharia de software focado em simular cenários de alta complexidade, resiliência e integridade financeira para uma fintech do mercado esportivo.
+FootBank é uma fintech fictícia voltada ao mercado de futebol. Este repositório é um laboratório prático de engenharia de software backend, onde o sistema evolui continuamente através de **features**, **incidentes** e **desafios de escala**.
 
-O objetivo deste repositório é documentar a resolução de incidentes críticos de produção em sistemas desenvolvidos com **Java 17+**, **Spring Boot** e conceitos avançados de **System Design**.
-
----
-
-## Arquitetura e Escopo do Projeto
-
-A aplicação simula um ecossistema de microsserviços financeiro voltado para clubes de futebol, processamento de ingressos (ticketing) e gerenciamento de carteiras digitais (wallets).
-
-Cada pasta dentro de `src/` representa um incidente real de Big Tech (Severidade 1 ou 2) que foi investigado, mitigado e corrigido através de revisões de código e padrões de arquitetura corporativa.
+O código não é uma coleção de exercícios isolados — é um sistema real que cresce a cada desafio.
 
 ---
 
-## Tecnologias e Conceitos de Engenharia Aplicados
+## Tecnologias
 
-Ao longo das simulações, foram implementados e consolidados os seguintes tópicos de arquitetura:
-
-- **Idempotência em APIs Financeiras:** Prevenção de duplicidade de transações causadas por reenvios de requisições.
-- **Padrões de Resiliência (Tolerância a Falhas):** Implementação conceitual de *Circuit Breakers* e estratégias de *Rollback* em falhas de integrações de APIs de terceiros.
-- **Performance no Java Moderno:** Uso eficiente de *Streams API* para manipulação de grandes volumes de dados em memória.
-- **Programação Orientada a Objetos Avançada:** Utilização de herança, encapsulamento e polimorfismo para modularização de regras de negócio complexas.
+| Tecnologia | Versão |
+|---|---|
+| Java | 17 |
+| Spring Boot | 3.3 |
+| Spring Data JPA | — |
+| Resilience4j | 2.2.0 |
+| Maven | — |
 
 ---
 
-## Registro de Incidentes Resolvidos
+## Estrutura do projeto
 
-Acompanhe a evolução do laboratório e a análise detalhada de cada caso técnico nas subpastas:
+```
+footbank/
+│
+├── src/
+│   └── main/
+│       ├── java/com/footbank/
+│       │   ├── FootbankApplication.java
+│       │   ├── config/           — configurações da aplicação
+│       │   ├── payment/          — domínio de pagamentos
+│       │   ├── wallet/           — carteira digital (a implementar)
+│       │   ├── ticket/           — ingressos (a implementar)
+│       │   └── audit/            — auditoria (a implementar)
+│       └── resources/
+│           └── application.yml
+│
+├── docs/
+│   ├── architecture/             — visão geral e decisões arquiteturais (ADRs)
+│   ├── incidents/                — registro de incidentes resolvidos
+│   ├── features/                 — documentação de funcionalidades
+│   └── scale/                    — desafios de escalabilidade
+│
+├── pom.xml
+└── README.md
+```
 
-1. **[Caso 01 - Idempotência](./src/01-idempotencia):** Tratamento de requisições duplicadas em cliques repetidos no fluxo de pagamento.
-2. *(Adicione os próximos casos aqui conforme for evoluindo!)*
+---
+
+## Incidentes resolvidos
+
+| # | Título | Conceito | Severidade |
+|---|---|---|---|
+| [001](docs/incidents/001-payment-duplication.md) | Duplicidade de Pagamentos | Idempotência | SEV-1 |
+| [002](docs/incidents/002-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
+
+---
+
+## Documentação
+
+- [Visão geral da arquitetura](docs/architecture/overview.md)
+- [ADR-001 — Circuit Breaker para integrações externas](docs/architecture/decisions/ADR-001-circuit-breaker.md)
 
 ---
 
 ## Autora
 
-- **Bárbara de Figueredo Matias**
-- [LinkedIn](https://www.linkedin.com/in/barbarafigueredo)
+**Bárbara de Figueredo Matias**
+[LinkedIn](https://www.linkedin.com/in/barbarafigueredo)
