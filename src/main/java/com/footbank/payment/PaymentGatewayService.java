@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.footbank.wallet.WalletService;
 
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -52,8 +53,33 @@ public class PaymentGatewayService {
         // Se a chamada acima deu certo e não jogou nenhum erro, a confirmação chegou!
         PaymentConfirmation confirmation = response.getBody();
 
-        // [3] REGRA DEPOIS DO GATEWAY: Se o gateway confirmou, agora sim retiramos o dinheiro!
-        walletService.debit(request.walletId(), request.amount());
+        try {
+            // [3] PRIMEIRA TENTATIVA DE DÉBITO
+            walletService.debit(request.walletId(), request.amount());
+
+        } catch (ObjectOptimisticLockingFailureException ex) {
+            //  Alguém alterou a carteira no mesmo milissegundo
+            System.out.println("Concorrência detectada! Tentando novamente com dados frescos...");
+
+            try {
+                // [TENTATIVA 2] Chamamos o débito novamente
+                // O walletService.debit internamente já busca a carteira de novo
+                // trazendo a versão atualizada do banco
+                walletService.debit(request.walletId(), request.amount());
+
+            } catch (IllegalStateException e) {
+                // Se na segunda tentativa der erro de saldo insuficiente,
+                // precisamos salvar como PENDING e notificar igual fazemos no Fallback
+
+                String transactionId = confirmation.transactionId(); // ou gerar um UUID
+                paymentRepository.save(new Payment(transactionId, request, PaymentStatus.PENDING));
+                notificationService.sendPendingPaymentEmail(request.walletId(), transactionId);
+
+                // Ajustamos a confirmação para avisar que ficou pendente
+                return new PaymentConfirmation(transactionId, "PENDING", request.amount(), Instant.now());
+            }
+        }
+
 
         return confirmation;
     }

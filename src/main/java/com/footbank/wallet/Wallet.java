@@ -3,6 +3,7 @@ package com.footbank.wallet;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -14,6 +15,8 @@ public class Wallet {
     private String walletId;
 
     private String ownerId;
+    @Version
+    private Long version;
     private BigDecimal balance;
     private Instant createdAt;
 
