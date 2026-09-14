@@ -24,16 +24,20 @@ O código não é uma coleção de exercícios isolados — é um sistema real q
 footbank/
 │
 ├── src/
-│   └── main/
-│       ├── java/com/footbank/
-│       │   ├── FootbankApplication.java
-│       │   ├── config/           — configurações da aplicação
-│       │   ├── payment/          — domínio de pagamentos
-│       │   ├── wallet/           — carteira digital (a implementar)
-│       │   ├── ticket/           — ingressos (a implementar)
-│       │   └── audit/            — auditoria (a implementar)
-│       └── resources/
-│           └── application.yml
+│   ├── main/
+│   │   ├── java/com/footbank/
+│   │   │   ├── FootbankApplication.java
+│   │   │   ├── config/           — configurações da aplicação
+│   │   │   ├── payment/          — domínio de pagamentos
+│   │   │   ├── wallet/           — carteira digital
+│   │   │   ├── ticket/           — ingressos (a implementar)
+│   │   │   └── audit/            — auditoria (a implementar)
+│   │   └── resources/
+│   │       └── application.yml
+│   └── test/
+│       └── java/com/footbank/
+│           ├── payment/          — PaymentGatewayServiceTest
+│           └── wallet/           — WalletServiceTest
 │
 ├── docs/
 │   ├── architecture/             — visão geral e decisões arquiteturais (ADRs)
@@ -47,11 +51,20 @@ footbank/
 
 ---
 
+## Features implementadas
+
+| # | Título | Domínio |
+|---|---|---|
+| [001](docs/features/001-wallet-digital.md) | Carteira Digital | `wallet/` |
+
+---
+
 ## Incidentes resolvidos
 
 | # | Título | Conceito | Severidade |
 |---|---|---|---|
-| [002](docs/incidents/001-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
+| [001](docs/incidents/001-circuit-breaker-cascade-failure.md) | Cascata de Falhas no payment-service | Circuit Breaker | SEV-1 |
+| [002](docs/incidents/002-optimistic-locking-double-spend.md) | Double Spend por ausência de Optimistic Locking | Optimistic Locking / `@Version` | SEV-1 |
 
 ---
 
