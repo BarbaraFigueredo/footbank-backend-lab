@@ -37,7 +37,7 @@ footbank/
 │   └── test/
 │       └── java/com/footbank/
 │           ├── payment/          — PaymentGatewayServiceTest
-│           └── wallet/           — WalletServiceTest
+│           └── wallet/           — WalletServiceTest, TransferServiceTest
 │
 ├── docs/
 │   ├── architecture/             — visão geral e decisões arquiteturais (ADRs)
@@ -56,6 +56,7 @@ footbank/
 | # | Título | Domínio |
 |---|---|---|
 | [001](docs/features/001-wallet-digital.md) | Carteira Digital | `wallet/` |
+| [002](docs/features/002-transferencia-entre-carteiras.md) | Transferência entre Carteiras | `wallet/` |
 
 ---
 
